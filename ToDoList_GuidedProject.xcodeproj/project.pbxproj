@@ -14,6 +14,7 @@
 		6F0ECF3026BD954200F33890 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F0ECF2E26BD954200F33890 /* LaunchScreen.storyboard */; };
 		6F0ECF3826BD983C00F33890 /* ToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0ECF3726BD983C00F33890 /* ToDo.swift */; };
 		6F0ECF3A26BD990000F33890 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0ECF3926BD990000F33890 /* ToDoTableViewController.swift */; };
+		6F6C409626C191F000A0594E /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6C409526C191F000A0594E /* ToDoCell.swift */; };
 		6F7366EE26BE5B86007878E7 /* ToDoDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F7366ED26BE5B86007878E7 /* ToDoDetailTableViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		6F0ECF3126BD954200F33890 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F0ECF3726BD983C00F33890 /* ToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo.swift; sourceTree = "<group>"; };
 		6F0ECF3926BD990000F33890 /* ToDoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewController.swift; sourceTree = "<group>"; };
+		6F6C409526C191F000A0594E /* ToDoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
 		6F7366ED26BE5B86007878E7 /* ToDoDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoDetailTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,6 +65,7 @@
 				6F0ECF2326BD954100F33890 /* AppDelegate.swift */,
 				6F0ECF2526BD954100F33890 /* SceneDelegate.swift */,
 				6F0ECF3726BD983C00F33890 /* ToDo.swift */,
+				6F6C409526C191F000A0594E /* ToDoCell.swift */,
 				6F0ECF3926BD990000F33890 /* ToDoTableViewController.swift */,
 				6F7366ED26BE5B86007878E7 /* ToDoDetailTableViewController.swift */,
 				6F0ECF2926BD954100F33890 /* Main.storyboard */,
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F0ECF3826BD983C00F33890 /* ToDo.swift in Sources */,
+				6F6C409626C191F000A0594E /* ToDoCell.swift in Sources */,
 				6F7366EE26BE5B86007878E7 /* ToDoDetailTableViewController.swift in Sources */,
 				6F0ECF3A26BD990000F33890 /* ToDoTableViewController.swift in Sources */,
 				6F0ECF2426BD954100F33890 /* AppDelegate.swift in Sources */,

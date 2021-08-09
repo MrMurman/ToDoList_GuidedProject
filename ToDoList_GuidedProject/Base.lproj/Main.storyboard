@@ -17,13 +17,42 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDoCellIdentifier" id="yPh-Fp-3Gf">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDoCellIdentifier" id="yPh-Fp-3Gf" customClass="ToDoCell" customModule="ToDoList_GuidedProject" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yPh-Fp-3Gf" id="wJ5-v1-U2J">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FTW-SA-2kX">
+                                            <rect key="frame" x="20" y="0.5" width="59" height="43"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain">
+                                                <imageReference key="image" image="circle" catalog="system"/>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="24"/>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="competeButtonTapped" destination="yPh-Fp-3Gf" eventType="touchUpInside" id="7I5-i0-PD2"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M7C-cW-gMZ">
+                                            <rect key="frame" x="79" y="11.5" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="M7C-cW-gMZ" firstAttribute="centerY" secondItem="wJ5-v1-U2J" secondAttribute="centerY" id="B1k-d5-rlG"/>
+                                        <constraint firstItem="M7C-cW-gMZ" firstAttribute="leading" secondItem="FTW-SA-2kX" secondAttribute="trailing" id="BBg-Ox-VOK"/>
+                                        <constraint firstItem="FTW-SA-2kX" firstAttribute="leading" secondItem="wJ5-v1-U2J" secondAttribute="leadingMargin" id="UD0-Xx-k1L"/>
+                                        <constraint firstItem="FTW-SA-2kX" firstAttribute="centerY" secondItem="wJ5-v1-U2J" secondAttribute="centerY" id="xD5-XB-fnh"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="isCompleteButton" destination="FTW-SA-2kX" id="jpB-TL-yjt"/>
+                                    <outlet property="titleLabel" destination="M7C-cW-gMZ" id="Th2-wY-8vl"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -34,7 +63,7 @@
                     <navigationItem key="navigationItem" id="mHa-Ye-FJc">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="r2F-RT-zTH">
                             <connections>
-                                <segue destination="1Q5-If-fzz" kind="presentation" id="xkY-hw-CIx"/>
+                                <action selector="createNewToDo:" destination="cZk-9E-sNT" id="BsA-ZI-C5u"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -46,9 +75,9 @@
         <!--New ToDo-->
         <scene sceneID="SCe-p2-ciN">
             <objects>
-                <tableViewController id="3NW-Th-V8n" customClass="ToDoDetailTableViewController" customModule="ToDoList_GuidedProject" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="detailVC" id="3NW-Th-V8n" customClass="ToDoDetailTableViewController" customModule="ToDoList_GuidedProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Fnd-vi-U5j">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
@@ -185,12 +214,12 @@
                     <navigationItem key="navigationItem" title="New ToDo" largeTitleDisplayMode="never" id="py5-yJ-g4J">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="byw-iL-Cwl">
                             <connections>
-                                <segue destination="T2t-AU-kQe" kind="unwind" unwindAction="unwindToDoListWithSegue:" id="JHR-v0-mAp"/>
+                                <action selector="cancelButtonTapped:" destination="3NW-Th-V8n" id="ewz-tK-ebW"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="yxR-En-fnn">
                             <connections>
-                                <segue destination="T2t-AU-kQe" kind="unwind" identifier="saveUnwind" unwindAction="unwindToDoListWithSegue:" id="KFW-rm-G8b"/>
+                                <action selector="saveButtonTapped:" destination="3NW-Th-V8n" id="YbH-sA-Wen"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -204,7 +233,6 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayU-zl-3IS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="T2t-AU-kQe" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2804.347826086957" y="153.34821428571428"/>
         </scene>
@@ -213,11 +241,11 @@
             <objects>
                 <navigationController id="1Q5-If-fzz" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JCP-uu-8Cp">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="3NW-Th-V8n" kind="relationship" relationship="rootViewController" id="0iW-8H-Wqr"/>
+                        <segue destination="3NW-Th-V8n" kind="relationship" relationship="rootViewController" destinationCreationSelector="editToDo:sender:" id="0iW-8H-Wqr"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kxI-iB-mLM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

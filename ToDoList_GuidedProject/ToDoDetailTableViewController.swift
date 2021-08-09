@@ -9,6 +9,10 @@ import UIKit
 
 class ToDoDetailTableViewController: UITableViewController {
 
+    var toDo: ToDo?
+    var saveDelegate: SaveDelegate?
+    
+    
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var isCompleteButton: UIButton!
     @IBOutlet weak var dueDateLabel: UILabel!
@@ -18,7 +22,18 @@ class ToDoDetailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dueDatePickerView.date = Date().addingTimeInterval(24*60*60)
+        
+        if let toDo = toDo {
+            navigationItem.title = "To-Do"
+            titleTextField.text = toDo.title
+            isCompleteButton.isSelected = toDo.isComplete
+            dueDatePickerView.date = toDo.dueDate
+            notesTextView.text = toDo.notes
+        } else {
+            dueDatePickerView.date = Date().addingTimeInterval(24*60*60)
+            notesTextView.text = ""
+        }
+        
         updateSaveButtonState()
         updateDueDateLabel(date: dueDatePickerView.date)
     }
@@ -33,6 +48,20 @@ class ToDoDetailTableViewController: UITableViewController {
     func updateDueDateLabel(date: Date) {
         dueDateLabel.text = ToDo.dueDateFormatter.string(from: date)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        guard segue.identifier == "saveUnwind" else {return}
+        
+        let title = titleTextField.text!
+        let isCompete = isCompleteButton.isSelected
+        let dueDate = dueDatePickerView.date
+        let notes = notesTextView.text
+        
+        toDo = ToDo(title: title, isComplete: isCompete, dueDate: dueDate, notes: notes)
+    }
+    
     
     
     @IBAction func textEditingChanged(_ sender: UITextField) {
@@ -55,6 +84,25 @@ class ToDoDetailTableViewController: UITableViewController {
     
     @IBAction func datePickerChanged(_ sender: UIDatePicker) {
         updateDueDateLabel(date: sender.date)
+    }
+    
+
+    @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        let title = titleTextField.text!
+        let isCompete = isCompleteButton.isSelected
+        let dueDate = dueDatePickerView.date
+        let notes = notesTextView.text
+       
+        toDo = ToDo(title: title, isComplete: isCompete, dueDate: dueDate, notes: notes)
+        
+        saveDelegate?.saveEditedToDo(toDo: toDo!)
+        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     
@@ -88,3 +136,11 @@ class ToDoDetailTableViewController: UITableViewController {
     }
 
 }
+
+
+
+protocol SaveDelegate {
+    func saveEditedToDo(toDo: ToDo)
+}
+
+

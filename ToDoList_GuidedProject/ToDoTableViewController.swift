@@ -7,10 +7,10 @@
 
 import UIKit
 
-class ToDoTableViewController: UITableViewController {
+class ToDoTableViewController: UITableViewController, SaveDelegate, ToDoCellDelegate{
 
     var todos = [ToDo]()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,10 +32,12 @@ class ToDoTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCellIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCellIdentifier", for: indexPath) as! ToDoCell
+        cell.delegate = self
         
         let todo = todos[indexPath.row]
-        cell.textLabel?.text = todo.title
+        cell.titleLabel?.text = todo.title
+        cell.isCompleteButton.isSelected = todo.isComplete
         return cell
     }
    
@@ -53,13 +55,53 @@ class ToDoTableViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        goToDetailVC(indexPath: indexPath)
+    }
     
     
     
     
-    
-    // MARK: - Segues
-    @IBAction func unwindToDoList(segue: UIStoryboardSegue){
+    // MARK: - Saves
+
+    func saveEditedToDo(toDo: ToDo) {
         
+        let newToDo = toDo
+        
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            todos[selectedIndexPath.row] = newToDo
+        } else {
+            let newIndexPath = IndexPath(row: todos.count, section: 0)
+            todos.append(toDo)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
+        tableView.reloadData()
+    }
+    
+    @IBAction func createNewToDo(_ sender: UIBarButtonItem) {
+        goToDetailVC(indexPath: nil)
+    }
+    
+    func goToDetailVC(indexPath: IndexPath?) {
+       
+        guard let detailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "detailVC") as? ToDoDetailTableViewController else {return}
+                 
+        detailVC.saveDelegate = self
+        
+        if let indexPath = indexPath {
+            detailVC.toDo = todos[indexPath.row]
+            present(UINavigationController(rootViewController: detailVC), animated: true)
+        } else {
+            self.navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
+    func checkmarkTapped(sender: ToDoCell) {
+        if let indexPath = tableView.indexPath(for: sender) {
+            var todo = todos[indexPath.row]
+            todo.isComplete.toggle()
+            todos[indexPath.row] = todo
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
     }
 }
