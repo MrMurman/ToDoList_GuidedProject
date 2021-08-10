@@ -52,6 +52,7 @@ class ToDoTableViewController: UITableViewController, SaveDelegate, ToDoCellDele
         if editingStyle == .delete {
             todos.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            ToDo.saveToDos(todos)
         }
     }
     
@@ -75,6 +76,7 @@ class ToDoTableViewController: UITableViewController, SaveDelegate, ToDoCellDele
             todos.append(toDo)
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
+        ToDo.saveToDos(todos)
         tableView.reloadData()
     }
     
@@ -102,6 +104,7 @@ class ToDoTableViewController: UITableViewController, SaveDelegate, ToDoCellDele
             todo.isComplete.toggle()
             todos[indexPath.row] = todo
             tableView.reloadRows(at: [indexPath], with: .automatic)
+            ToDo.saveToDos(todos)
         }
     }
 }
